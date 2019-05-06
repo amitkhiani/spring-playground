@@ -3,10 +3,7 @@ package com.example.demoapp;
 import com.example.demoapp.service.MathService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -24,5 +21,10 @@ public class CalculatorController {
     @PostMapping("/math/sum")
     public String mathCalculatorWithOnlyAddition(@RequestParam MultiValueMap<String, String> valuesOfN) {
         return mathService.getSumForOperation(valuesOfN);
+    }
+
+    @RequestMapping("/math/volume/{length}/{width}/{height}")
+    public String mathCalculatorForVolume(@PathVariable String length, @PathVariable String width, @PathVariable String height) {
+        return mathService.getVolumeForOperation(length, width, height);
     }
 }

@@ -61,4 +61,17 @@ public class MathService {
         responseStr.append(" = ").append(result);
         return responseStr.toString();
     }
+
+    public String getVolumeForOperation(String length, String width, String height) {
+        try {
+            StringBuilder response = new StringBuilder();
+            int result = Integer.parseInt(length) * Integer.parseInt(width) * Integer.parseInt(height);
+            response.append("The volume of a ").append(length).append("x").append(width).append("x").append(height)
+                    .append(" rectangle is ").append(result);
+            return response.toString();
+        } catch (NumberFormatException exception) {
+            exception.printStackTrace();
+            return "Invalid number in path variable";
+        }
+    }
 }

@@ -11,8 +11,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -95,5 +94,32 @@ public class CalculatorControllerTest {
         this.mvc.perform(post("/math/sum?n=4&n=5&n=6&n=7"))
                 .andExpect(status().isOk())
                 .andExpect(content().string("4 + 5 + 6 + 7 = 22"));
+    }
+
+    @Test
+    public void testForVolumeWithThreePathVariablesUsingGet() throws Exception {
+        when(mathService.getVolumeForOperation(any(),any(),any())).thenReturn("The volume of 3x4x5 rectangle is 60");
+
+        this.mvc.perform(get("/math/volume/3/4/5"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("The volume of 3x4x5 rectangle is 60"));
+    }
+
+    @Test
+    public void testForVolumeWithThreePathVariablesUsingPost() throws Exception {
+        when(mathService.getVolumeForOperation(any(),any(),any())).thenReturn("The volume of 3x4x5 rectangle is 60");
+
+        this.mvc.perform(post("/math/volume/3/4/5"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("The volume of 3x4x5 rectangle is 60"));
+    }
+
+    @Test
+    public void testForVolumeWithThreePathVariablesUsingPatch() throws Exception {
+        when(mathService.getVolumeForOperation(any(),any(),any())).thenReturn("The volume of 3x4x5 rectangle is 60");
+
+        this.mvc.perform(patch("/math/volume/3/4/5"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("The volume of 3x4x5 rectangle is 60"));
     }
 }
