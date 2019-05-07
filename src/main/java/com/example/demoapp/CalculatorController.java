@@ -27,4 +27,10 @@ public class CalculatorController {
     public String mathCalculatorForVolume(@PathVariable String length, @PathVariable String width, @PathVariable String height) {
         return mathService.getVolumeForOperation(length, width, height);
     }
+
+    @PostMapping("/math/area")
+    public String mathCalculatorForArea(@RequestParam Map<String, String> requestBody) {
+        System.out.println(requestBody);
+        return mathService.getAreaForOperation(requestBody);
+    }
 }

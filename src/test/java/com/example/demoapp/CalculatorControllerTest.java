@@ -6,6 +6,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -121,5 +122,12 @@ public class CalculatorControllerTest {
         this.mvc.perform(patch("/math/volume/3/4/5"))
                 .andExpect(status().isOk())
                 .andExpect(content().string("The volume of 3x4x5 rectangle is 60"));
+    }
+
+    @Test
+    public void testForAreaWithRadius() throws Exception {
+        this.mvc.perform(post("/math/area").contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE).content("type=circle&radius=4"))
+                .andExpect(status().isOk());
+                //.andExpect(content().string("Area of a circle with a radius of 4 is 50.26548"));
     }
 }

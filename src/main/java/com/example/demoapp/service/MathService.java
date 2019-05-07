@@ -18,6 +18,9 @@ public class MathService {
     public static final String MULTIPLY_OPERATION = "multiply";
     public static final String SUBTRACT_OPERATION = "subtract";
     public static final String DIVISION_OPERATION = "divide";
+    public static final String CIRCLE_TYPE = "circle";
+    public static final String RECTANGLE_TYPE = "rectangle";
+    public static final String INVALID_RESPONSE = "Invalid";
 
     public String getResultForOperation(Map<String, String> queryString) {
         int valueOfX = Integer.parseInt(queryString.get(X_QUERY_STR));
@@ -73,5 +76,31 @@ public class MathService {
             exception.printStackTrace();
             return "Invalid number in path variable";
         }
+    }
+
+    public String getAreaForOperation(Map<String, String> requestBody) {
+        final String type = requestBody.get("type") == null ? INVALID_RESPONSE : requestBody.get("type");
+        System.out.println(type);
+        double result;
+        StringBuilder response = new StringBuilder("Area of a ");
+        if(type.equalsIgnoreCase(CIRCLE_TYPE)) {
+            double radius = requestBody.get("radius") == null ? -1 : Integer.parseInt(requestBody.get("radius"));
+            if(radius == -1) {
+                return INVALID_RESPONSE;
+            }
+            result = Math.PI * radius * radius;
+            response.append(type).append(" with a radius of ").append(radius).append(" is ").append(result);
+        } else if(type.equalsIgnoreCase(RECTANGLE_TYPE)) {
+            double width = requestBody.get("width") == null ? -1 : Integer.parseInt(requestBody.get("width"));
+            double height = requestBody.get("height") == null ? -1 : Integer.parseInt(requestBody.get("height"));
+            if(width == -1 || height == -1) {
+                return INVALID_RESPONSE;
+            }
+            result = width * height;
+            response.append(width).append("x").append(height).append(" ").append(type).append(" is ").append(result);
+        } else if(type.equalsIgnoreCase(INVALID_RESPONSE)) {
+            return INVALID_RESPONSE;
+        }
+        return response.toString();
     }
 }
