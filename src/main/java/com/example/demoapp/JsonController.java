@@ -1,6 +1,10 @@
 package com.example.demoapp;
 
+import com.example.demoapp.model.TicketTotalResponse;
+import com.example.demoapp.model.TicketsRequest;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -54,5 +58,12 @@ public class JsonController {
         response2.setDeparts(new Date());
         response2.setTickets(tickets2);
         return Arrays.asList(response, response2);
+    }
+
+    @PostMapping("/flights/tickets/total")
+    public TicketTotalResponse calculateFlightTotal(@RequestBody TicketsRequest ticketsRequest) {
+        TicketTotalResponse response = new TicketTotalResponse();
+        response.setResult(ticketsRequest.getTicketList().stream().mapToInt(x -> x.getPrice()).sum());
+        return response;
     }
 }
