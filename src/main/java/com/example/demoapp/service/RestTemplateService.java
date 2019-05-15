@@ -15,6 +15,10 @@ public class RestTemplateService {
     public static final String API_KEY = "PASTE_THE_KEY";
     private final RestTemplate restTemplate = new RestTemplate();
 
+    public RestTemplate getRestTemplate() {
+        return this.restTemplate;
+    }
+
     public String callOmdbApiHttpRequest(String queryString) {
         URI uri = UriComponentsBuilder
                 .fromUriString(OMDB_API_URL + "?apikey=" + API_KEY + "&s={queryString}")
